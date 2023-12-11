@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Gallery-app.scss';
 
 function Gallery() {
@@ -7,8 +7,8 @@ function Gallery() {
   const API_SET = "https://api.unsplash.com/photos/";
   const API_KEY = "pnlX-ZNr4MrE350J7ovcCdI6DJvwdDkQEAOEq1fj6Ss";
 
-  const [searchValue, setSearchValue] = useState("");
   const [pageCurrent, setPageCurrent] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("coffe");
 
 
 
@@ -16,16 +16,17 @@ function Gallery() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_SET}?query=${searchValue.current}&page=${pageCurrent}&client_id=${API_KEY}`
-        );
+          `${API_SET}?page=${pageCurrent}&client_id=${API_KEY}&query=${searchQuery}`
+          );
         setPhotos((prevPhotos) => [...prevPhotos, ...response.data]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+    
     fetchData();
-  }, [searchValue.current, pageCurrent]);
+  }, [pageCurrent, searchQuery]);
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,10 +35,9 @@ function Gallery() {
       const clientHeight = document.documentElement.clientHeight;
 
       if (scrollHeight - scrollTop <= clientHeight + 1) {
-        setTimeout(()=>{
+        setTimeout(() => {
           setPageCurrent((prevPage) => prevPage + 1);
-
-        }, 3000)
+        }, 1000);
       }
     };
 
@@ -52,13 +52,14 @@ function Gallery() {
       <div className='header-bottom'>
         <input
           type="text"
-          onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Поиск"
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
       <div className='gallery-images'>
         {photos.map((photo) => (
-          <div key={photo.id}>
+          <div className='images'
+           key={photo.id}>
             <img src={photo.urls.small} alt={photo.description || 'No description'} />
           </div>
         ))}
