@@ -10,11 +10,8 @@ function Header() {
         <img src={logo} alt="" />
         <div className='left-item'>
           <img src={like} alt="" />
-          <a href="#">Избранное</a>
+          <a href="4">Избранное</a>
         </div>
-      </div>
-      <div className='header-bottom'>
-        <input type="text" placeholder='Поиск' />
       </div>
     </div>
   )

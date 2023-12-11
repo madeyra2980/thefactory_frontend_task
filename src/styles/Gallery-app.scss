@@ -1,0 +1,15 @@
+
+.header-bottom{
+    width: 100%;
+    background-image: url('../assets/img/background-header.png');
+    height: 267px;
+}
+.gallery-images{
+    background-color: aquamarine;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
